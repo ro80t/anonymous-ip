@@ -1,1 +1,81 @@
-import maxmind, { type AsnResponse, type CityResponse, type CountryResponse } from "maxmind";import { open as openGeoDb, GeoIpDbName } from "geolite2-redist";export interface IpGeoInfo {  ip: string;  asn: {    number: number | null;    organization: string | null;  };  country: {    isoCode: string | null;    name: string | null;  };  city: {    name: string | null;  };}function memoizeAsync<T>(factory: () => Promise<T>): () => Promise<T> {  let promise: Promise<T> | undefined;  return () => {    promise ??= factory();    return promise;  };}const getAsnReader = memoizeAsync(() =>  openGeoDb(GeoIpDbName.ASN, (path) => maxmind.open<AsnResponse>(path)),);const getCountryReader = memoizeAsync(() =>  openGeoDb(GeoIpDbName.Country, (path) => maxmind.open<CountryResponse>(path)),);const getCityReader = memoizeAsync(() =>  openGeoDb(GeoIpDbName.City, (path) => maxmind.open<CityResponse>(path)),);/** * Looks up ASN, country and city information for an IP address using * MaxMind's GeoLite2 databases (via geolite2-redist). */export async function lookupIp(ip: string): Promise<IpGeoInfo> {  if (!maxmind.validate(ip)) {    throw new Error(`Invalid IP address: ${ip}`);  }  const [asn, country, city] = await Promise.all([    getAsnReader().then((reader) => reader.get(ip)),    getCountryReader().then((reader) => reader.get(ip)),    getCityReader().then((reader) => reader.get(ip)),  ]);  return {    ip,    asn: {      number: asn?.autonomous_system_number ?? null,      organization: asn?.autonomous_system_organization ?? null,    },    country: {      isoCode: country?.country?.iso_code ?? null,      name: country?.country?.names.en ?? null,    },    city: {      name: city?.city?.names.en ?? null,    },  };}/** * Closes the underlying GeoLite2 database readers and stops the * background auto-updater. Call this before process exit if needed. */export async function closeGeoReaders(): Promise<void> {  const [asn, country, city] = await Promise.all([    getAsnReader(),    getCountryReader(),    getCityReader(),  ]);  asn.close();  country.close();  city.close();}
+import maxmind, { type AsnResponse, type CityResponse, type CountryResponse } from "maxmind";
+import { open as openGeoDb, GeoIpDbName } from "geolite2-redist";
+
+export interface IpGeoInfo {
+  ip: string;
+  asn: {
+    number: number | null;
+    organization: string | null;
+  };
+  country: {
+    isoCode: string | null;
+    name: string | null;
+  };
+  city: {
+    name: string | null;
+  };
+}
+
+function memoizeAsync<T>(factory: () => Promise<T>): () => Promise<T> {
+  let promise: Promise<T> | undefined;
+  return () => {
+    promise ??= factory();
+    return promise;
+  };
+}
+
+const getAsnReader = memoizeAsync(() =>
+  openGeoDb(GeoIpDbName.ASN, (path) => maxmind.open<AsnResponse>(path)),
+);
+const getCountryReader = memoizeAsync(() =>
+  openGeoDb(GeoIpDbName.Country, (path) => maxmind.open<CountryResponse>(path)),
+);
+const getCityReader = memoizeAsync(() =>
+  openGeoDb(GeoIpDbName.City, (path) => maxmind.open<CityResponse>(path)),
+);
+
+/**
+ * Looks up ASN, country and city information for an IP address using
+ * MaxMind's GeoLite2 databases (via geolite2-redist).
+ */
+export async function lookupIp(ip: string): Promise<IpGeoInfo> {
+  if (!maxmind.validate(ip)) {
+    throw new Error(`Invalid IP address: ${ip}`);
+  }
+
+  const [asn, country, city] = await Promise.all([
+    getAsnReader().then((reader) => reader.get(ip)),
+    getCountryReader().then((reader) => reader.get(ip)),
+    getCityReader().then((reader) => reader.get(ip)),
+  ]);
+
+  return {
+    ip,
+    asn: {
+      number: asn?.autonomous_system_number ?? null,
+      organization: asn?.autonomous_system_organization ?? null,
+    },
+    country: {
+      isoCode: country?.country?.iso_code ?? null,
+      name: country?.country?.names.en ?? null,
+    },
+    city: {
+      name: city?.city?.names.en ?? null,
+    },
+  };
+}
+
+/**
+ * Closes the underlying GeoLite2 database readers and stops the
+ * background auto-updater. Call this before process exit if needed.
+ */
+export async function closeGeoReaders(): Promise<void> {
+  const [asn, country, city] = await Promise.all([
+    getAsnReader(),
+    getCountryReader(),
+    getCityReader(),
+  ]);
+  asn.close();
+  country.close();
+  city.close();
+}

@@ -1,1 +1,28 @@
-import { lookupIp, type IpGeoInfo } from "./geo";import { isVpnAsn, getVpnProvider } from "./vpn-asns";export * from "./geo";export * from "./vpn-asns";export interface VpnCheckResult {  ip: string;  isVpn: boolean;  provider: string | null;  geo: IpGeoInfo;}/** * Looks up an IP's ASN/country/city and checks it against the known * VPN/proxy ASN list. */export async function checkVpn(ip: string): Promise<VpnCheckResult> {  const geo = await lookupIp(ip);  const asn = geo.asn.number;  return {    ip,    isVpn: isVpnAsn(asn),    provider: getVpnProvider(asn),    geo,  };}
+import { lookupIp, type IpGeoInfo } from "./geo";
+import { isVpnAsn, getVpnProvider } from "./vpn-asns";
+
+export * from "./geo";
+export * from "./vpn-asns";
+
+export interface VpnCheckResult {
+  ip: string;
+  isVpn: boolean;
+  provider: string | null;
+  geo: IpGeoInfo;
+}
+
+/**
+ * Looks up an IP's ASN/country/city and checks it against the known
+ * VPN/proxy ASN list.
+ */
+export async function checkVpn(ip: string): Promise<VpnCheckResult> {
+  const geo = await lookupIp(ip);
+  const asn = geo.asn.number;
+
+  return {
+    ip,
+    isVpn: isVpnAsn(asn),
+    provider: getVpnProvider(asn),
+    geo,
+  };
+}

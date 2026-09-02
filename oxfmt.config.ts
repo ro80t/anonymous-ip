@@ -1,1 +1,10 @@
-import { defineConfig } from "oxfmt";export default defineConfig({  useTabs: false,  tabWidth: 2,  semi: true,  singleQuote: false,  endOfLine: "cr",  ignorePatterns: [],});
+import { defineConfig } from "oxfmt";
+
+export default defineConfig({
+  useTabs: false,
+  tabWidth: 2,
+  semi: true,
+  singleQuote: false,
+  endOfLine: "lf",
+  ignorePatterns: [],
+});
