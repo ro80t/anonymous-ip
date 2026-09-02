@@ -1,35 +1,1 @@
-{
-  "name": "anonymous-ip",
-  "version": "0.0.0",
-  "type": "module",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ro80t/anonymous-ip.git"
-  },
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.mts"
-    }
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "tsdown": "^0.22.14"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "geolite2-redist": "^3.1.3",
-    "maxmind": "^5.0.7"
-  }
-}
+{  "name": "anonymous-ip",  "version": "0.0.0",  "license": "MIT",  "repository": {    "type": "git",    "url": "git+https://github.com/ro80t/anonymous-ip.git"  },  "files": [    "dist"  ],  "type": "module",  "exports": {    ".": {      "import": "./dist/index.mjs",      "require": "./dist/index.cjs",      "types": "./dist/index.d.mts"    }  },  "publishConfig": {    "access": "public",    "registry": "https://registry.npmjs.org"  },  "scripts": {    "lint": "oxlint",    "format": "oxfmt",    "format:check": "oxfmt --check"  },  "dependencies": {    "geolite2-redist": "^3.1.3",    "maxmind": "^5.0.7"  },  "devDependencies": {    "@types/bun": "latest",    "oxfmt": "^0.66.0",    "oxlint": "^1.81.0",    "tsdown": "^0.22.14"  },  "peerDependencies": {    "typescript": "^5"  }}
