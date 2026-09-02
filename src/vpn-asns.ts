@@ -1,0 +1,40 @@
+/**
+ * Known ASNs belonging to VPN / proxy / anonymization providers.
+ *
+ * Seeded from the community-maintained X4BNet/lists_vpn dataset
+ * (https://github.com/X4BNet/lists_vpn/blob/main/input/vpn/ASN.txt),
+ * plus a few independently verified additions. ASN-to-provider mapping
+ * changes over time as providers migrate infrastructure, so keep this
+ * list updated (issues/PRs against the source repo above are a good
+ * place to check for newly reported VPN ASNs).
+ */
+export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
+  [9009, "M247 (NordVPN)"],
+  [20448, "VPNtranet, LLC."],
+  [209854, "Surfshark"],
+  [136787, "NordVPN (TEFINCOM S.A.)"],
+  [32751, "Octovpn / Xbox VPN"],
+  [212238, "Datacamp (VPN)"],
+  [50525, "Privado VPN"],
+  [207137, "Packethub (NordVPN)"],
+  [60729, "Tor Servers (Tor exit nodes)"],
+  [398391, "Checkpoint VPN"],
+  [401401, "Unredacted VPN provider"],
+  [401720, "Unredacted VPN provider"],
+  [200373, "3xKTech"],
+  [198571, "3xKTech"],
+  [208172, "ProtonVPN"],
+  [216025, "Mullvad VPN AB"],
+  [39351, "Mullvad VPN (31173 Services AB)"],
+]);
+
+/** Returns true if the given ASN belongs to a known VPN/proxy provider. */
+export function isVpnAsn(asn: number | null | undefined): boolean {
+  return asn != null && VPN_ASN_PROVIDERS.has(asn);
+}
+
+/** Returns the known VPN/proxy provider name for an ASN, or null. */
+export function getVpnProvider(asn: number | null | undefined): string | null {
+  if (asn == null) return null;
+  return VPN_ASN_PROVIDERS.get(asn) ?? null;
+}
