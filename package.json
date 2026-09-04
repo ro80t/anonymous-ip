@@ -28,6 +28,7 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "build": "tsdown",
     "changeset": "changeset",
     "version": "changeset version",
@@ -43,7 +44,8 @@
     "@types/bun": "latest",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
-    "tsdown": "^0.22.14"
+    "tsdown": "^0.22.14",
+    "vitest": "^5.0.0"
   },
   "peerDependencies": {
     "typescript": "^5"

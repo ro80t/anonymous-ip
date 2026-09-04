@@ -20,6 +20,7 @@ bun run lint          # static analysis via oxlint
 bun run format        # format code with oxfmt
 bun run format:check  # check formatting only
 bun run typecheck     # tsc --noEmit
+bun run test           # run unit tests with vitest
 bun run build          # build dist/ with tsdown
 ```
 
