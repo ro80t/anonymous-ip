@@ -16,6 +16,13 @@ describe("isVpnAsn", () => {
   });
 });
 
+describe("VPN_ASN_PROVIDERS", () => {
+  it("has no duplicate provider entries for the same ASN", () => {
+    const asns = [...VPN_ASN_PROVIDERS.keys()];
+    expect(new Set(asns).size).toBe(asns.length);
+  });
+});
+
 describe("getVpnProvider", () => {
   it("returns the provider name for a known VPN/proxy ASN", () => {
     expect(getVpnProvider(9009)).toBe(VPN_ASN_PROVIDERS.get(9009));
