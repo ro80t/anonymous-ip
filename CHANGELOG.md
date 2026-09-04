@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 0.3.0
+
+### Minor Changes
+
+- [`2db8b58`](https://github.com/ro80t/anonymous-ip/commit/2db8b5844df711702a14ef45507586e6311ab8f1) Thanks [@ro80t](https://github.com/ro80t)! - Expand `VPN_ASN_PROVIDERS` with 19 additional VPN/proxy/Tor ASNs, including smaller secondary ASNs used by already-listed providers (ProtonVPN, Mullvad, PIA, Opera VPN, etc.) and a few previously-unlisted providers (IPVanish, Windscribe, AzireVPN, PrivateVPN, VyprVPN, Speedify, HMA, CroxyProxy, Rayobyte). Each entry was independently verified against RIPEstat/ARIN whois data before inclusion.
+
 ## 0.2.0
 
 ### Minor Changes
