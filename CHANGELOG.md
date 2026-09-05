@@ -1,5 +1,13 @@
 # anonymous-ip
 
+## 2.1.0
+
+### Minor Changes
+
+- [`78f29d2`](https://github.com/ro80t/anonymous-ip/commit/78f29d25d408cb51aa29a0c754e8d2680225a08b) Thanks [@ro80t](https://github.com/ro80t)! - Add 4 more ASNs to `VPN_ASN_PROVIDERS` (Astrill VPN, WiTopia, IVPN) and 6 more to `PROXY_ASN_PROVIDERS` (HostRoyale in India, Alsycon B.V. in the Netherlands, Belcloud in Bulgaria, Cyberdyne S.A. in the AFRINIC region), further broadening geographic and provider-type coverage. Each entry was independently verified against RIPEstat whois data before inclusion.
+
+- [`c74d2e5`](https://github.com/ro80t/anonymous-ip/commit/c74d2e5903cb8617813b4934c9c6cd339a6d478a) Thanks [@ro80t](https://github.com/ro80t)! - Add 3 more ASNs to `PROXY_ASN_PROVIDERS`: a second Rayobyte/Sprious LLC ASN, and two well-documented bulletproof hosting networks — Chang Way Technologies (Hong Kong) and Media Land LLC (Russia). Each entry was independently verified against RIPEstat/ARIN whois data before inclusion.
+
 ## 2.0.0
 
 ### Major Changes

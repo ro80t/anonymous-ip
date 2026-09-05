@@ -1,6 +1,6 @@
 {
   "name": "anonymous-ip",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Look up an IP's ASN, country, and city, and detect known VPN/proxy connections using MaxMind GeoLite2.",
   "license": "MIT",
   "repository": {
