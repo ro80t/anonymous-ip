@@ -1,6 +1,6 @@
 # anonymous-ip
 
-Looks up the ASN, country, and city for an IP address and checks it against a list of known VPN/proxy ASNs and the official Tor exit node list to detect anonymized connections. Uses [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) via [`geolite2-redist`](https://github.com/GitSquared/node-geolite2-redist), so no MaxMind license key is required.
+Looks up the ASN, country, and city for an IP address and checks it against known anonymization signals — a curated VPN ASN list, a curated proxy ASN list, and the official Tor exit node list — to detect anonymized connections. Uses [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) via [`geolite2-redist`](https://github.com/GitSquared/node-geolite2-redist), so no MaxMind license key is required.
 
 ## Install
 
@@ -14,7 +14,7 @@ npm install anonymous-ip
 
 ## Usage
 
-### Anonymity detection (VPN + Tor)
+### Anonymity detection (VPN + proxy + Tor)
 
 ```ts
 import { checkAnonymity } from "anonymous-ip";
@@ -24,8 +24,10 @@ console.log(result);
 // {
 //   ip: "185.212.170.1",
 //   isVpn: true,
+//   isProxy: false,
 //   isTor: false,
 //   provider: "M247 (NordVPN)",
+//   proxyProvider: null,
 //   geo: {
 //     ip: "185.212.170.1",
 //     asn: { number: 9009, organization: "M247 Europe SRL" },
@@ -35,7 +37,7 @@ console.log(result);
 // }
 ```
 
-`checkAnonymity` combines every anonymization signal this package knows about (VPN/proxy ASNs and Tor exit nodes today) into one result, so adding new signals later won't require an API rename.
+`checkAnonymity` combines every anonymization signal this package knows about (VPN ASNs, proxy ASNs, and Tor exit nodes today) into one result, so adding new signals later won't require an API rename. A small number of ASNs are known to serve both VPN and proxy traffic and can set both `isVpn` and `isProxy`.
 
 ### Tor exit node detection
 
@@ -64,10 +66,13 @@ const geo = await lookupIp("8.8.8.8");
 ### Checking a raw ASN
 
 ```ts
-import { isVpnAsn, getVpnProvider } from "anonymous-ip";
+import { isVpnAsn, getVpnProvider, isProxyAsn, getProxyProvider } from "anonymous-ip";
 
 isVpnAsn(9009); // true
 getVpnProvider(9009); // "M247 (NordVPN)"
+
+isProxyAsn(201814); // true
+getProxyProvider(201814); // "CroxyProxy (MEVSPACE sp. z o.o.)"
 ```
 
 ### Shutting down
@@ -82,21 +87,24 @@ await closeGeoReaders();
 
 ## API
 
-| Function                                                           | Description                                                                                                              |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `lookupIp(ip: string): Promise<IpGeoInfo>`                         | Looks up ASN, country, and city for an IP address. Throws if the IP string is invalid.                                   |
-| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`        | Runs `lookupIp` and checks the result against every known anonymization signal (VPN/proxy ASN list, Tor exit node list). |
-| `isVpnAsn(asn: number \| null \| undefined): boolean`              | Returns true if the ASN belongs to a known VPN/proxy provider.                                                           |
-| `getVpnProvider(asn: number \| null \| undefined): string \| null` | Returns the known VPN/proxy provider name for an ASN, or `null`.                                                         |
-| `isTorExitNode(ip: string): Promise<boolean>`                      | Returns true if the IP is a known Tor exit node.                                                                         |
-| `getTorExitNodes(): Promise<ReadonlySet<string>>`                  | Returns the cached set of known Tor exit node IPs, fetching it if needed.                                                |
-| `clearTorExitNodeCache(): void`                                    | Clears the in-memory Tor exit node cache, forcing the next lookup to refetch.                                            |
-| `closeGeoReaders(): Promise<void>`                                 | Closes the GeoLite2 database readers and stops the background auto-updater.                                              |
-| `VPN_ASN_PROVIDERS`                                                | `ReadonlyMap<number, string>` of known VPN/proxy ASNs to provider names.                                                 |
+| Function                                                             | Description                                                                                                                   |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `lookupIp(ip: string): Promise<IpGeoInfo>`                           | Looks up ASN, country, and city for an IP address. Throws if the IP string is invalid.                                        |
+| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`          | Runs `lookupIp` and checks the result against every known anonymization signal (VPN ASN list, proxy ASN list, Tor exit list). |
+| `isVpnAsn(asn: number \| null \| undefined): boolean`                | Returns true if the ASN belongs to a known VPN provider.                                                                      |
+| `getVpnProvider(asn: number \| null \| undefined): string \| null`   | Returns the known VPN provider name for an ASN, or `null`.                                                                    |
+| `isProxyAsn(asn: number \| null \| undefined): boolean`              | Returns true if the ASN belongs to a known proxy provider.                                                                    |
+| `getProxyProvider(asn: number \| null \| undefined): string \| null` | Returns the known proxy provider name for an ASN, or `null`.                                                                  |
+| `isTorExitNode(ip: string): Promise<boolean>`                        | Returns true if the IP is a known Tor exit node.                                                                              |
+| `getTorExitNodes(): Promise<ReadonlySet<string>>`                    | Returns the cached set of known Tor exit node IPs, fetching it if needed.                                                     |
+| `clearTorExitNodeCache(): void`                                      | Clears the in-memory Tor exit node cache, forcing the next lookup to refetch.                                                 |
+| `closeGeoReaders(): Promise<void>`                                   | Closes the GeoLite2 database readers and stops the background auto-updater.                                                   |
+| `VPN_ASN_PROVIDERS`                                                  | `ReadonlyMap<number, string>` of known VPN ASNs to provider names.                                                            |
+| `PROXY_ASN_PROVIDERS`                                                | `ReadonlyMap<number, string>` of known proxy ASNs to provider names.                                                          |
 
-## About the VPN/proxy ASN list
+## About the VPN and proxy ASN lists
 
-The list in `src/vpn-asns.ts` is a small, curated set seeded from [X4BNet/lists_vpn](https://github.com/X4BNet/lists_vpn). VPN providers change infrastructure (and therefore ASNs) frequently, so this list alone won't catch every VPN or proxy. For broader coverage, pull in updates from that dataset regularly, or combine it with a wider "datacenter ASN" list (at the cost of more false positives).
+The lists in `src/vpn-asns.ts` and `src/proxy-asns.ts` are small, curated sets — the VPN list seeded from [X4BNet/lists_vpn](https://github.com/X4BNet/lists_vpn), the proxy list built from independently verified entries. A handful of ASNs are known to serve both VPN and proxy traffic and appear in both lists. Providers change infrastructure (and therefore ASNs) frequently, so neither list alone will catch every VPN or proxy. For broader coverage, pull in updates from those sources regularly, or combine them with a wider "datacenter ASN" list (at the cost of more false positives).
 
 ## Contributing
 

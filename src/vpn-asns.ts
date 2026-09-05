@@ -1,5 +1,7 @@
 /**
- * Known ASNs belonging to VPN / proxy / anonymization providers.
+ * Known ASNs belonging to consumer VPN providers. Open/commercial proxy
+ * providers are tracked separately in `proxy-asns.ts`; a handful of ASNs
+ * are known to serve both purposes and appear in both lists.
  *
  * Seeded from the community-maintained X4BNet/lists_vpn dataset
  * (https://github.com/X4BNet/lists_vpn/blob/main/input/vpn/ASN.txt),
@@ -45,8 +47,6 @@ export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [205016, "Opera VPN (HERN Labs AB)"],
   [39832, "Opera VPN (Opera Norway AS)"],
   [33837, "Tor exit nodes (PRQ / Fredrik Holmqvist)"],
-  [201814, "CroxyProxy (MEVSPACE sp. z o.o.)"],
-  [64267, "Rayobyte proxy (Sprious LLC)"],
   [394087, "PureVPN (Secure Internet LLC)"],
   [60068, "Datacamp (VPN) / CDN77"],
   [206264, "hide.me VPN (Amarutu Technology Ltd)"],

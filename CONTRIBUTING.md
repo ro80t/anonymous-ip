@@ -9,7 +9,8 @@ bun install
 ## Project layout
 
 - `src/geo.ts` — GeoLite2 lookups (`lookupIp`, `closeGeoReaders`)
-- `src/vpn-asns.ts` — known VPN/proxy ASN list (`VPN_ASN_PROVIDERS`, `isVpnAsn`, `getVpnProvider`)
+- `src/vpn-asns.ts` — known VPN ASN list (`VPN_ASN_PROVIDERS`, `isVpnAsn`, `getVpnProvider`)
+- `src/proxy-asns.ts` — known proxy ASN list (`PROXY_ASN_PROVIDERS`, `isProxyAsn`, `getProxyProvider`)
 - `src/tor.ts` — Tor exit node detection, backed by the official Tor Project bulk exit list (`isTorExitNode`, `getTorExitNodes`, `clearTorExitNodeCache`)
 - `src/index.ts` — public entry point, combines the above into `checkAnonymity`
 
@@ -26,9 +27,9 @@ bun run build          # build dist/ with tsdown
 
 Run all of the above (as CI does, see `.github/workflows/ci.yml`) before opening a PR.
 
-## Updating the VPN/proxy ASN list
+## Updating the VPN and proxy ASN lists
 
-`src/vpn-asns.ts` is seeded from [X4BNet/lists_vpn](https://github.com/X4BNet/lists_vpn/blob/main/input/vpn/ASN.txt). When adding an ASN, verify it against that dataset (or another reliable source) and note the provider name — avoid adding unverified entries, since false positives affect every consumer of this package.
+`src/vpn-asns.ts` is seeded from [X4BNet/lists_vpn](https://github.com/X4BNet/lists_vpn/blob/main/input/vpn/ASN.txt); `src/proxy-asns.ts` is built from independently verified entries. When adding an ASN to either list, verify it against a reliable source (e.g. RIPEstat or ARIN whois) and note the provider name — avoid adding unverified entries, since false positives affect every consumer of this package. A handful of ASNs are known to serve both VPN and proxy traffic and belong in both lists.
 
 ## Releasing
 

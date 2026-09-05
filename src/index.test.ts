@@ -31,30 +31,48 @@ describe("checkAnonymity", () => {
     const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(true);
+    expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(false);
     expect(result.provider).toBe("M247 (NordVPN)");
+    expect(result.proxyProvider).toBeNull();
   });
 
-  it("flags a Tor exit node independently of the ASN check", async () => {
+  it("flags a known proxy ASN and reports its provider", async () => {
+    lookupIp.mockResolvedValue(geo(201814));
+    isTorExitNode.mockResolvedValue(false);
+
+    const result = await checkAnonymity("1.2.3.4");
+
+    expect(result.isVpn).toBe(false);
+    expect(result.isProxy).toBe(true);
+    expect(result.provider).toBeNull();
+    expect(result.proxyProvider).toBe("CroxyProxy (MEVSPACE sp. z o.o.)");
+  });
+
+  it("flags a Tor exit node independently of the ASN checks", async () => {
     lookupIp.mockResolvedValue(geo(15169));
     isTorExitNode.mockResolvedValue(true);
 
     const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(false);
+    expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(true);
     expect(result.provider).toBeNull();
+    expect(result.proxyProvider).toBeNull();
   });
 
-  it("reports neither flag for a clean IP", async () => {
+  it("reports no flags for a clean IP", async () => {
     lookupIp.mockResolvedValue(geo(15169));
     isTorExitNode.mockResolvedValue(false);
 
     const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(false);
+    expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(false);
     expect(result.provider).toBeNull();
+    expect(result.proxyProvider).toBeNull();
     expect(result.geo.asn.number).toBe(15169);
   });
 });
