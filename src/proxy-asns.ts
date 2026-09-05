@@ -19,6 +19,15 @@ export const PROXY_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [51381, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
   [56873, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
   [210558, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
+  [8849, "Melbikomas UAB (Lithuania proxy / data-collection infrastructure)"],
+  [56630, "Melbikomas UAB (Lithuania proxy / data-collection infrastructure)"],
+  [401645, "DataImpulse proxy network (Softoria LLC)"],
+  [45420, "Bulletproof hosting / proxy infrastructure (Shinjiru, Malaysia)"],
+  [61432, "Bulletproof hosting / proxy infrastructure (VAIZ Partner, Ukraine)"],
+  [210950, "Bulletproof hosting / proxy infrastructure (E-Rishennya, Ukraine)"],
+  [211736, "Bulletproof hosting / proxy infrastructure (FDN3, Ukraine)"],
+  [212283, "Bulletproof hosting / proxy infrastructure (Roza Holidays, Bulgaria)"],
+  [204428, "Bulletproof hosting / proxy infrastructure (SS-Net, Bulgaria)"],
 ]);
 
 /** Returns true if the given ASN belongs to a known proxy provider. */
