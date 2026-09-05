@@ -1,5 +1,27 @@
 # anonymous-ip
 
+## 1.0.0
+
+### Major Changes
+
+- [`32467dd`](https://github.com/ro80t/anonymous-ip/commit/32467dda585d52b4cab2c328b9df95f9ab6e325b) Thanks [@ro80t](https://github.com/ro80t)! - **Breaking:** Rename `checkVpn` to `checkAnonymity` and `VpnCheckResult` to `AnonymityCheckResult`. The function already reported Tor exit node status alongside the VPN/ASN check, which the old name didn't reflect, and more anonymization signals (e.g. proxy detection) are planned. Update imports:
+
+  ```diff
+  -import { checkVpn, type VpnCheckResult } from "anonymous-ip";
+  +import { checkAnonymity, type AnonymityCheckResult } from "anonymous-ip";
+
+  -const result = await checkVpn(ip);
+  +const result = await checkAnonymity(ip);
+  ```
+
+  The shape of the result (`ip`, `isVpn`, `isTor`, `provider`, `geo`) is unchanged.
+
+### Minor Changes
+
+- [`e385f90`](https://github.com/ro80t/anonymous-ip/commit/e385f908694dfc18d9c0f58533b59910676bb0fa) Thanks [@ro80t](https://github.com/ro80t)! - Add proxy ASN detection, mirroring the existing VPN ASN detection. `src/proxy-asns.ts` exports `PROXY_ASN_PROVIDERS`, `isProxyAsn`, and `getProxyProvider`; `checkAnonymity` now also returns `isProxy` and `proxyProvider`.
+
+  Two ASNs previously listed only in `VPN_ASN_PROVIDERS` (CroxyProxy and Rayobyte, ASNs 201814 and 64267) were open/commercial proxy services rather than consumer VPNs, so they moved to `PROXY_ASN_PROVIDERS`: `isVpnAsn`/`checkAnonymity().isVpn` will now report `false` for these two ASNs, while `isProxyAsn`/`checkAnonymity().isProxy` reports `true`. A few ASNs that genuinely serve both purposes (Aeza Group, 1337 Services/EliteTeam, IP Volume inc) remain listed in both maps.
+
 ## 0.4.0
 
 ### Minor Changes
