@@ -1,5 +1,26 @@
 # anonymous-ip
 
+## 2.0.0
+
+### Major Changes
+
+- [`d5918fb`](https://github.com/ro80t/anonymous-ip/commit/d5918fb46ed2cd3d3e492362891355d5c366e907) Thanks [@ro80t](https://github.com/ro80t)! - **Breaking:** `AnonymityCheckResult` now ties each flag to its provider field at the type level, and `provider` is renamed to `vpnProvider` for symmetry with `proxyProvider`.
+
+  ```diff
+  -provider: string | null;
+  -proxyProvider: string | null;
+  +// isVpn: true  -> vpnProvider: string
+  +// isVpn: false -> vpnProvider: null
+  +// isProxy: true  -> proxyProvider: string
+  +// isProxy: false -> proxyProvider: null
+  ```
+
+  Once you've checked `result.isVpn` (or `result.isProxy`), TypeScript narrows `vpnProvider`/`proxyProvider` to `string` for you — no more `provider !== null` checks needed alongside the flag. Update any code reading `result.provider` to `result.vpnProvider`.
+
+### Minor Changes
+
+- [`013e303`](https://github.com/ro80t/anonymous-ip/commit/013e303705b9f498328da5f794698e8b7eef233b) Thanks [@ro80t](https://github.com/ro80t)! - Add 9 more ASNs to `PROXY_ASN_PROVIDERS`, broadening geographic coverage beyond the initial seed set: Melbikomas UAB (Lithuania, proxy/data-collection infrastructure), DataImpulse (Softoria LLC), and bulletproof hosting/proxy infrastructure in Malaysia (Shinjiru), Ukraine (VAIZ Partner, E-Rishennya, FDN3), and Bulgaria (Roza Holidays, SS-Net). Each entry was independently verified against RIPEstat whois data before inclusion.
+
 ## 1.0.0
 
 ### Major Changes
