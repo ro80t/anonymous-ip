@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 0.4.0
+
+### Minor Changes
+
+- [`501ff88`](https://github.com/ro80t/anonymous-ip/commit/501ff8827c53d14805e0724a8abbbf543a7a3120) Thanks [@ro80t](https://github.com/ro80t)! - Add 10 more ASNs to `VPN_ASN_PROVIDERS`, broadening coverage beyond mainstream consumer VPN brands: PureVPN, hide.me, a second Datacamp/CDN77 ASN, two dedicated Tor-relay-operator ASNs (Foundation for Applied Privacy, FlokiNET), and a new "bulletproof/anonymity hosting" category (Aeza Group, 1337 Services/EliteTeam) frequently used to front VPN and proxy traffic. Each entry was independently verified against RIPEstat/ARIN whois data before inclusion.
+
 ## 0.3.0
 
 ### Minor Changes
