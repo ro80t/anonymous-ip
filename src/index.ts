@@ -1,6 +1,6 @@
 import { lookupIp, type IpGeoInfo } from "./geo";
-import { isVpnAsn, getVpnProvider } from "./vpn-asns";
-import { isProxyAsn, getProxyProvider } from "./proxy-asns";
+import { getVpnProvider } from "./vpn-asns";
+import { getProxyProvider } from "./proxy-asns";
 import { isTorExitNode } from "./tor";
 
 export * from "./geo";
@@ -8,14 +8,27 @@ export * from "./vpn-asns";
 export * from "./proxy-asns";
 export * from "./tor";
 
-export interface AnonymityCheckResult {
+export type VpnSignal = { isVpn: true; vpnProvider: string } | { isVpn: false; vpnProvider: null };
+
+export type ProxySignal =
+  | { isProxy: true; proxyProvider: string }
+  | { isProxy: false; proxyProvider: null };
+
+export type AnonymityCheckResult = {
   ip: string;
-  isVpn: boolean;
-  isProxy: boolean;
   isTor: boolean;
-  provider: string | null;
-  proxyProvider: string | null;
   geo: IpGeoInfo;
+} & VpnSignal &
+  ProxySignal;
+
+function toVpnSignal(vpnProvider: string | null): VpnSignal {
+  return vpnProvider != null ? { isVpn: true, vpnProvider } : { isVpn: false, vpnProvider: null };
+}
+
+function toProxySignal(proxyProvider: string | null): ProxySignal {
+  return proxyProvider != null
+    ? { isProxy: true, proxyProvider }
+    : { isProxy: false, proxyProvider: null };
 }
 
 /**
@@ -29,11 +42,9 @@ export async function checkAnonymity(ip: string): Promise<AnonymityCheckResult> 
 
   return {
     ip,
-    isVpn: isVpnAsn(asn),
-    isProxy: isProxyAsn(asn),
     isTor,
-    provider: getVpnProvider(asn),
-    proxyProvider: getProxyProvider(asn),
     geo,
+    ...toVpnSignal(getVpnProvider(asn)),
+    ...toProxySignal(getProxyProvider(asn)),
   };
 }

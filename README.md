@@ -27,7 +27,7 @@ console.log(result);
 //   isVpn: true,
 //   isProxy: false,
 //   isTor: false,
-//   provider: "M247 (NordVPN)",
+//   vpnProvider: "M247 (NordVPN)",
 //   proxyProvider: null,
 //   geo: {
 //     ip: "185.212.170.1",
@@ -36,9 +36,15 @@ console.log(result);
 //     city: { name: "Zurich" }
 //   }
 // }
+
+if (result.isVpn) {
+  result.vpnProvider; // typed as `string`, not `string | null`
+}
 ```
 
 `checkAnonymity` combines every anonymization signal this package knows about (VPN ASNs, proxy ASNs, and Tor exit nodes today) into one result, so adding new signals later won't require an API rename. A small number of ASNs are known to serve both VPN and proxy traffic and can set both `isVpn` and `isProxy`.
+
+`AnonymityCheckResult` ties each flag to its provider field at the type level: `vpnProvider` is `string` when `isVpn` is `true` and `null` when it's `false` (and likewise for `isProxy`/`proxyProvider`), so TypeScript narrows the provider field for you once you've checked the flag — no manual null check needed.
 
 ### Tor exit node detection
 

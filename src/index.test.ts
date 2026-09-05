@@ -33,7 +33,10 @@ describe("checkAnonymity", () => {
     expect(result.isVpn).toBe(true);
     expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(false);
-    expect(result.provider).toBe("M247 (NordVPN)");
+    if (result.isVpn) {
+      // Narrowed to `string` at the type level — no null check needed.
+      expect(result.vpnProvider).toBe("M247 (NordVPN)");
+    }
     expect(result.proxyProvider).toBeNull();
   });
 
@@ -45,8 +48,10 @@ describe("checkAnonymity", () => {
 
     expect(result.isVpn).toBe(false);
     expect(result.isProxy).toBe(true);
-    expect(result.provider).toBeNull();
-    expect(result.proxyProvider).toBe("CroxyProxy (MEVSPACE sp. z o.o.)");
+    expect(result.vpnProvider).toBeNull();
+    if (result.isProxy) {
+      expect(result.proxyProvider).toBe("CroxyProxy (MEVSPACE sp. z o.o.)");
+    }
   });
 
   it("flags a Tor exit node independently of the ASN checks", async () => {
@@ -58,7 +63,7 @@ describe("checkAnonymity", () => {
     expect(result.isVpn).toBe(false);
     expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(true);
-    expect(result.provider).toBeNull();
+    expect(result.vpnProvider).toBeNull();
     expect(result.proxyProvider).toBeNull();
   });
 
@@ -71,7 +76,7 @@ describe("checkAnonymity", () => {
     expect(result.isVpn).toBe(false);
     expect(result.isProxy).toBe(false);
     expect(result.isTor).toBe(false);
-    expect(result.provider).toBeNull();
+    expect(result.vpnProvider).toBeNull();
     expect(result.proxyProvider).toBeNull();
     expect(result.geo.asn.number).toBe(15169);
   });
