@@ -5,9 +5,10 @@ Looks up the ASN, country, and city for an IP address and checks it against know
 ## Install
 
 ```sh
-bun add anonymous-ip
-# or
 npm install anonymous-ip
+pnpm add anonymous-ip
+yarn add anonymous-ip
+bun add anonymous-ip
 ```
 
 `typescript` is a peer dependency (only needed if you use the type definitions).
