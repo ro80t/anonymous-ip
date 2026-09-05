@@ -47,6 +47,16 @@ export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [33837, "Tor exit nodes (PRQ / Fredrik Holmqvist)"],
   [201814, "CroxyProxy (MEVSPACE sp. z o.o.)"],
   [64267, "Rayobyte proxy (Sprious LLC)"],
+  [394087, "PureVPN (Secure Internet LLC)"],
+  [60068, "Datacamp (VPN) / CDN77"],
+  [206264, "hide.me VPN (Amarutu Technology Ltd)"],
+  [210644, "Aeza Group (bulletproof hosting / proxy infrastructure)"],
+  [216246, "Aeza Group (bulletproof hosting / proxy infrastructure)"],
+  [51381, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
+  [56873, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
+  [210558, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
+  [208323, "Tor relays (Foundation for Applied Privacy)"],
+  [200651, "Anonymity-focused hosting / Tor (FlokiNET)"],
 ]);
 
 /** Returns true if the given ASN belongs to a known VPN/proxy provider. */
