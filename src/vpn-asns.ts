@@ -57,6 +57,10 @@ export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [210558, "1337 Services / EliteTeam (VPN & proxy infrastructure)"],
   [208323, "Tor relays (Foundation for Applied Privacy)"],
   [200651, "Anonymity-focused hosting / Tor (FlokiNET)"],
+  [58546, "Astrill VPN"],
+  [47099, "WiTopia"],
+  [47100, "WiTopia"],
+  [203619, "IVPN"],
 ]);
 
 /** Returns true if the given ASN belongs to a known VPN/proxy provider. */

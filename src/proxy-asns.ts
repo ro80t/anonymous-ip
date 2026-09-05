@@ -28,6 +28,12 @@ export const PROXY_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [211736, "Bulletproof hosting / proxy infrastructure (FDN3, Ukraine)"],
   [212283, "Bulletproof hosting / proxy infrastructure (Roza Holidays, Bulgaria)"],
   [204428, "Bulletproof hosting / proxy infrastructure (SS-Net, Bulgaria)"],
+  [39486, "Bulletproof hosting / proxy infrastructure (HostRoyale, India)"],
+  [133499, "Bulletproof hosting / proxy infrastructure (HostRoyale, India)"],
+  [49305, "Proxy / VPN backend hosting (Alsycon B.V., Netherlands)"],
+  [208911, "Proxy / VPN backend hosting (Alsycon B.V., Netherlands)"],
+  [44901, "Bulletproof hosting / proxy infrastructure (Belcloud, Bulgaria)"],
+  [37560, "Offshore / bulletproof hosting (Cyberdyne S.A., AFRINIC region)"],
 ]);
 
 /** Returns true if the given ASN belongs to a known proxy provider. */
