@@ -11,7 +11,7 @@ bun install
 - `src/geo.ts` — GeoLite2 lookups (`lookupIp`, `closeGeoReaders`)
 - `src/vpn-asns.ts` — known VPN/proxy ASN list (`VPN_ASN_PROVIDERS`, `isVpnAsn`, `getVpnProvider`)
 - `src/tor.ts` — Tor exit node detection, backed by the official Tor Project bulk exit list (`isTorExitNode`, `getTorExitNodes`, `clearTorExitNodeCache`)
-- `src/index.ts` — public entry point, combines the above into `checkVpn`
+- `src/index.ts` — public entry point, combines the above into `checkAnonymity`
 
 ## Scripts
 

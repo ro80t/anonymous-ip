@@ -7,7 +7,7 @@ const isTorExitNode = vi.fn<(ip: string) => Promise<boolean>>();
 vi.mock("./geo", () => ({ lookupIp: (ip: string) => lookupIp(ip) }));
 vi.mock("./tor", () => ({ isTorExitNode: (ip: string) => isTorExitNode(ip) }));
 
-const { checkVpn } = await import("./index");
+const { checkAnonymity } = await import("./index");
 
 function geo(asn: number | null): IpGeoInfo {
   return {
@@ -18,7 +18,7 @@ function geo(asn: number | null): IpGeoInfo {
   };
 }
 
-describe("checkVpn", () => {
+describe("checkAnonymity", () => {
   beforeEach(() => {
     lookupIp.mockReset();
     isTorExitNode.mockReset();
@@ -28,7 +28,7 @@ describe("checkVpn", () => {
     lookupIp.mockResolvedValue(geo(9009));
     isTorExitNode.mockResolvedValue(false);
 
-    const result = await checkVpn("1.2.3.4");
+    const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(true);
     expect(result.isTor).toBe(false);
@@ -39,7 +39,7 @@ describe("checkVpn", () => {
     lookupIp.mockResolvedValue(geo(15169));
     isTorExitNode.mockResolvedValue(true);
 
-    const result = await checkVpn("1.2.3.4");
+    const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(false);
     expect(result.isTor).toBe(true);
@@ -50,7 +50,7 @@ describe("checkVpn", () => {
     lookupIp.mockResolvedValue(geo(15169));
     isTorExitNode.mockResolvedValue(false);
 
-    const result = await checkVpn("1.2.3.4");
+    const result = await checkAnonymity("1.2.3.4");
 
     expect(result.isVpn).toBe(false);
     expect(result.isTor).toBe(false);

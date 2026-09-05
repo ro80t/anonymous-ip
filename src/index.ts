@@ -6,7 +6,7 @@ export * from "./geo";
 export * from "./vpn-asns";
 export * from "./tor";
 
-export interface VpnCheckResult {
+export interface AnonymityCheckResult {
   ip: string;
   isVpn: boolean;
   isTor: boolean;
@@ -15,10 +15,11 @@ export interface VpnCheckResult {
 }
 
 /**
- * Looks up an IP's ASN/country/city, checks it against the known
- * VPN/proxy ASN list, and checks it against the Tor exit node list.
+ * Looks up an IP's ASN/country/city and checks it against known
+ * anonymization signals: the VPN/proxy ASN list and the Tor exit node
+ * list.
  */
-export async function checkVpn(ip: string): Promise<VpnCheckResult> {
+export async function checkAnonymity(ip: string): Promise<AnonymityCheckResult> {
   const [geo, isTor] = await Promise.all([lookupIp(ip), isTorExitNode(ip)]);
   const asn = geo.asn.number;
 
