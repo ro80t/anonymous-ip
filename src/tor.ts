@@ -1,15 +1,12 @@
 /**
- * Tor exit node detection.
- *
- * Unlike VPN providers, Tor exit relays run across thousands of unrelated
- * ASNs (residential ISPs, hosting providers, universities, etc.), so a
- * static ASN list can't identify them reliably. Instead, this checks IPs
- * against the official Tor Project bulk exit list, which is fetched once
- * and cached in memory for a limited time.
+ * Tor relays span thousands of unrelated ASNs, so unlike VPN/proxy
+ * detection this can't use a static ASN list — instead it checks IPs
+ * against the official Tor Project bulk exit list, cached in memory
+ * for a limited time.
  */
 
 const TOR_EXIT_LIST_URL = "https://check.torproject.org/torbulkexitlist";
-const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+const CACHE_TTL_MS = 60 * 60 * 1000;
 
 let cachedNodes: ReadonlySet<string> | undefined;
 let cachedAt = 0;

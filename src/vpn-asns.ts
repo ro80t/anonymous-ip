@@ -1,16 +1,11 @@
 /**
- * Known ASNs belonging to consumer VPN providers. Open/commercial proxy
- * providers are tracked separately in `proxy-asns.ts`; a handful of ASNs
- * are known to serve both purposes and appear in both lists.
+ * Known ASNs belonging to consumer VPN providers. Proxy providers are
+ * tracked separately in `proxy-asns.ts`; a handful of ASNs serve both
+ * and appear in both lists.
  *
- * Seeded from the community-maintained X4BNet/lists_vpn dataset
- * (https://github.com/X4BNet/lists_vpn/blob/main/input/vpn/ASN.txt),
- * plus independently verified additions (including smaller/secondary
- * ASNs run by already-listed providers, verified via RIPEstat/ARIN
- * whois rather than taken as-is from any single source). ASN-to-provider
- * mapping changes over time as providers migrate infrastructure, so keep
- * this list updated (issues/PRs against the source repo above are a good
- * place to check for newly reported VPN ASNs).
+ * Seeded from X4BNet/lists_vpn, plus additions verified against
+ * RIPEstat/ARIN whois. Mappings shift as providers migrate
+ * infrastructure — see CONTRIBUTING.md before adding entries.
  */
 export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [9009, "M247 (NordVPN)"],

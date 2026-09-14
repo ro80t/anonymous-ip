@@ -44,6 +44,7 @@
     "@types/bun": "latest",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
+    "skills": "^1.5.26",
     "tsdown": "^0.23.0",
     "vitest": "^5.0.0"
   },

@@ -1,13 +1,10 @@
 /**
- * Known ASNs belonging to open/commercial proxy providers (web proxies,
- * SOCKS5/HTTP proxy resellers, scraping proxy networks, bulletproof
- * hosting fronting proxy traffic) — distinct from consumer VPN client
- * apps, which are tracked in `vpn-asns.ts`. A handful of ASNs are known
- * to serve both purposes and appear in both lists.
+ * Known ASNs belonging to proxy providers (resellers, scraping networks,
+ * bulletproof hosting) — distinct from VPN client apps, tracked in
+ * `vpn-asns.ts`. A handful of ASNs serve both and appear in both lists.
  *
- * Every entry was independently verified against RIPEstat/ARIN whois
- * data before inclusion; ASN-to-provider mapping changes over time as
- * providers migrate infrastructure, so keep this list updated.
+ * Every entry is verified against RIPEstat/ARIN whois before inclusion —
+ * see CONTRIBUTING.md before adding entries.
  */
 export const PROXY_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [201814, "CroxyProxy (MEVSPACE sp. z o.o.)"],
