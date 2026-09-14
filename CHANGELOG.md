@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 2.2.0
+
+### Minor Changes
+
+- [#13](https://github.com/ro80t/anonymous-ip/pull/13) [`f1f0d1f`](https://github.com/ro80t/anonymous-ip/commit/f1f0d1f86754baa72bf60ccc4c21aca5c727f5a4) Thanks [@ro80t](https://github.com/ro80t)! - Add ASN 209043 (IPRoyal proxy network) to `PROXY_ASN_PROVIDERS`.
+
 ## 2.1.0
 
 ### Minor Changes
