@@ -82,6 +82,30 @@ isProxyAsn(201814); // true
 getProxyProvider(201814); // "CroxyProxy (MEVSPACE sp. z o.o.)"
 ```
 
+### Hono middleware
+
+`anonymous-ip/hono` exposes an `anonymousIp` middleware that runs `checkAnonymity` for the request's client IP and stores the result on the context, so route handlers can read it with `c.get("anonymity")` instead of calling `checkAnonymity` themselves.
+
+```ts
+import { Hono } from "hono";
+import { anonymousIp, type AnonymousIpVariables } from "anonymous-ip/hono";
+
+const app = new Hono<{ Variables: AnonymousIpVariables }>();
+app.use(anonymousIp());
+
+app.get("/", (c) => {
+  const anonymity = c.get("anonymity");
+  if (anonymity?.isVpn) return c.text("VPNs are not allowed", 403);
+  return c.text("welcome");
+});
+```
+
+By default, the client IP is read from the first `X-Forwarded-For` entry, falling back to `X-Real-IP`; `anonymity` is `null` when neither header is present. Pass `getIp` to resolve the IP another way (e.g. a platform-specific header, or [`hono/conninfo`](https://hono.dev/docs/helpers/conninfo)):
+
+```ts
+app.use(anonymousIp({ getIp: (c) => c.req.header("cf-connecting-ip") }));
+```
+
 ### Shutting down
 
 The GeoLite2 databases are downloaded in the background on first use and kept up to date automatically. In short-lived processes (CLIs, tests, serverless functions), close the readers explicitly once you're done.
@@ -106,6 +130,7 @@ await closeGeoReaders();
 | `getTorExitNodes(): Promise<ReadonlySet<string>>`                    | Returns the cached set of known Tor exit node IPs, fetching it if needed.                                                     |
 | `clearTorExitNodeCache(): void`                                      | Clears the in-memory Tor exit node cache, forcing the next lookup to refetch.                                                 |
 | `closeGeoReaders(): Promise<void>`                                   | Closes the GeoLite2 database readers and stops the background auto-updater.                                                   |
+| `anonymousIp(options?): MiddlewareHandler` (from `anonymous-ip/hono`) | Hono middleware that runs `checkAnonymity` for the request's IP and stores the result as `c.get("anonymity")`.                |
 | `VPN_ASN_PROVIDERS`                                                  | `ReadonlyMap<number, string>` of known VPN ASNs to provider names.                                                            |
 | `PROXY_ASN_PROVIDERS`                                                | `ReadonlyMap<number, string>` of known proxy ASNs to provider names.                                                          |
 

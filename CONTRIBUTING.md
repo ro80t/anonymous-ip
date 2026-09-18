@@ -13,6 +13,7 @@ bun install
 - `src/proxy-asns.ts` — known proxy ASN list (`PROXY_ASN_PROVIDERS`, `isProxyAsn`, `getProxyProvider`)
 - `src/tor.ts` — Tor exit node detection, backed by the official Tor Project bulk exit list (`isTorExitNode`, `getTorExitNodes`, `clearTorExitNodeCache`)
 - `src/index.ts` — public entry point, combines the above into `checkAnonymity`
+- `src/hono.ts` — `anonymousIp` Hono middleware, published as the `anonymous-ip/hono` subpath
 
 ## Scripts
 
