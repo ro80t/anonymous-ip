@@ -5,7 +5,19 @@
       "source": "ro80t/hush",
       "sourceType": "github",
       "skillPath": "skills/hush/SKILL.md",
-      "computedHash": "3b15c765223a1ff1e98a7a1a0bcd5abdcfb6201523f4e00d707350544e5053fc"
+      "computedHash": "bc4c35c783c5aac0e30636592d040b0e64e14b969d1f3f2b93daa711925c9839"
+    },
+    "hush-fix": {
+      "source": "ro80t/hush",
+      "sourceType": "github",
+      "skillPath": "skills/hush-fix/SKILL.md",
+      "computedHash": "a3f6e0b98984b0305b1c0bd5af107b9034be537d4c94f2566b9e2654fc8b6392"
+    },
+    "hush-review": {
+      "source": "ro80t/hush",
+      "sourceType": "github",
+      "skillPath": "skills/hush-review/SKILL.md",
+      "computedHash": "dd9414f55feab1f83a0d6c4c1b8cfe15fd525fb63090c56812ea8a7ca6c480da"
     }
   }
 }
