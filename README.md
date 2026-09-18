@@ -120,21 +120,21 @@ await closeGeoReaders();
 
 ## API
 
-| Function                                                             | Description                                                                                                                   |
-| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `lookupIp(ip: string): Promise<IpGeoInfo>`                           | Looks up ASN, country, and city for an IP address. Throws if the IP string is invalid.                                        |
-| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`          | Runs `lookupIp` and checks the result against every known anonymization signal (VPN ASN list, proxy ASN list, Tor exit list). |
-| `isVpnAsn(asn: number \| null \| undefined): boolean`                | Returns true if the ASN belongs to a known VPN provider.                                                                      |
-| `getVpnProvider(asn: number \| null \| undefined): string \| null`   | Returns the known VPN provider name for an ASN, or `null`.                                                                    |
-| `isProxyAsn(asn: number \| null \| undefined): boolean`              | Returns true if the ASN belongs to a known proxy provider.                                                                    |
-| `getProxyProvider(asn: number \| null \| undefined): string \| null` | Returns the known proxy provider name for an ASN, or `null`.                                                                  |
-| `isTorExitNode(ip: string): Promise<boolean>`                        | Returns true if the IP is a known Tor exit node.                                                                              |
-| `getTorExitNodes(): Promise<ReadonlySet<string>>`                    | Returns the cached set of known Tor exit node IPs, fetching it if needed.                                                     |
-| `clearTorExitNodeCache(): void`                                      | Clears the in-memory Tor exit node cache, forcing the next lookup to refetch.                                                 |
-| `closeGeoReaders(): Promise<void>`                                   | Closes the GeoLite2 database readers and stops the background auto-updater.                                                   |
+| Function                                                              | Description                                                                                                                   |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `lookupIp(ip: string): Promise<IpGeoInfo>`                            | Looks up ASN, country, and city for an IP address. Throws if the IP string is invalid.                                        |
+| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`           | Runs `lookupIp` and checks the result against every known anonymization signal (VPN ASN list, proxy ASN list, Tor exit list). |
+| `isVpnAsn(asn: number \| null \| undefined): boolean`                 | Returns true if the ASN belongs to a known VPN provider.                                                                      |
+| `getVpnProvider(asn: number \| null \| undefined): string \| null`    | Returns the known VPN provider name for an ASN, or `null`.                                                                    |
+| `isProxyAsn(asn: number \| null \| undefined): boolean`               | Returns true if the ASN belongs to a known proxy provider.                                                                    |
+| `getProxyProvider(asn: number \| null \| undefined): string \| null`  | Returns the known proxy provider name for an ASN, or `null`.                                                                  |
+| `isTorExitNode(ip: string): Promise<boolean>`                         | Returns true if the IP is a known Tor exit node.                                                                              |
+| `getTorExitNodes(): Promise<ReadonlySet<string>>`                     | Returns the cached set of known Tor exit node IPs, fetching it if needed.                                                     |
+| `clearTorExitNodeCache(): void`                                       | Clears the in-memory Tor exit node cache, forcing the next lookup to refetch.                                                 |
+| `closeGeoReaders(): Promise<void>`                                    | Closes the GeoLite2 database readers and stops the background auto-updater.                                                   |
 | `anonymousIp(options?): MiddlewareHandler` (from `anonymous-ip/hono`) | Hono middleware that runs `checkAnonymity` for the request's IP and stores the result as `c.get("anonymity")`.                |
-| `VPN_ASN_PROVIDERS`                                                  | `ReadonlyMap<number, string>` of known VPN ASNs to provider names.                                                            |
-| `PROXY_ASN_PROVIDERS`                                                | `ReadonlyMap<number, string>` of known proxy ASNs to provider names.                                                          |
+| `VPN_ASN_PROVIDERS`                                                   | `ReadonlyMap<number, string>` of known VPN ASNs to provider names.                                                            |
+| `PROXY_ASN_PROVIDERS`                                                 | `ReadonlyMap<number, string>` of known proxy ASNs to provider names.                                                          |
 
 ## About the VPN and proxy ASN lists
 
