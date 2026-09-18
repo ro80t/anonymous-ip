@@ -100,7 +100,9 @@ app.get("/", (c) => {
 });
 ```
 
-By default, the client IP is read from the first `X-Forwarded-For` entry, falling back to `X-Real-IP`; `anonymity` is `null` when neither header is present. Pass `getIp` to resolve the IP another way (e.g. a platform-specific header, or [`hono/conninfo`](https://hono.dev/docs/helpers/conninfo)):
+By default, the client IP is read from the first `X-Forwarded-For` entry, falling back to `X-Real-IP`; `anonymity` is `null` when neither header is present.
+
+⚠️ Both headers are client-controlled and trivially spoofable unless a reverse proxy in front of your app overwrites them — trusting them blindly lets a client fake its IP and evade VPN/proxy/Tor detection. Pass `getIp` to resolve the IP from wherever it's actually trustworthy in your deployment: a proxy-appended header, [`hono/conninfo`](https://hono.dev/docs/helpers/conninfo), or a platform-specific binding.
 
 ```ts
 app.use(anonymousIp({ getIp: (c) => c.req.header("cf-connecting-ip") }));

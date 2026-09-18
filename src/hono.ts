@@ -8,8 +8,12 @@ export type AnonymousIpVariables = {
 export interface AnonymousIpOptions {
   /**
    * Extracts the client IP from the request. Defaults to reading the first
-   * `X-Forwarded-For` entry, falling back to `X-Real-IP`. Override this on
-   * platforms where the client IP comes from elsewhere (e.g. `hono/conninfo`).
+   * `X-Forwarded-For` entry, falling back to `X-Real-IP`.
+   *
+   * Both headers are client-controlled and trivially spoofable unless a
+   * reverse proxy in front of your app overwrites them. Pass `getIp` to read
+   * the IP from wherever it's actually trustworthy in your deployment (a
+   * proxy-appended header, `hono/conninfo`, a platform-specific binding).
    */
   getIp?: (c: Context) => string | null | undefined;
 }
