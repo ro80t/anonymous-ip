@@ -5,6 +5,7 @@ version: 1.0.0
 ---
 
 <!-- RULE-SUMMARY:START -->
+
 # Hush
 
 Code that explains itself. A comment only earns its line when a name can't do the job.
@@ -14,9 +15,9 @@ Code that explains itself. A comment only earns its line when a name can't do th
 Before writing or keeping a comment, run it down this list and stop at the first rung that applies:
 
 1. **Can a rename remove the need for this comment?** Rename, delete the comment. A comment restating what `isExpired` already says is noise; a variable called `flag` needing a comment to explain it is a naming bug, not a documentation gap.
-2. **Is this a public/exported surface** (library entry point, exported function/class/method, public API)? Write a full doc comment with a usage example. No length cap — see *Public API docs* below.
+2. **Is this a public/exported surface** (library entry point, exported function/class/method, public API)? Write a full doc comment with a usage example. No length cap — see _Public API docs_ below.
 3. **Would misreading this line cause a bug** — a non-obvious side effect, an invariant the type system can't express, a workaround for a specific library/platform quirk, a "don't reorder this" constraint, or a tempting-looking alternative that was deliberately rejected? Comment it. This applies **regardless of public or private** visibility.
-4. **Is this a branch** (`if`/`for`/`while`/`switch`/`case`) whose condition or body can't be inferred from the names of the variables/functions/methods it uses? Write one short comment on *why*, not *what*.
+4. **Is this a branch** (`if`/`for`/`while`/`switch`/`case`) whose condition or body can't be inferred from the names of the variables/functions/methods it uses? Write one short comment on _why_, not _what_.
 5. **None of the above** → no comment.
 
 ## Naming first
@@ -49,6 +50,7 @@ Anything a rename would fix: restating the method name, narrating a straightforw
 ## Examples
 
 **Naming replaces the comment**
+
 ```js
 // bad: comment papers over a bad name
 // check if the user can edit this document
@@ -59,15 +61,18 @@ if (user.role >= Role.Editor && !document.locked) { ... }
 ```
 
 **Branch that still needs a comment (rung 4)**
+
 ```python
 # Stripe requires idempotency keys to be reused on retry, not regenerated,
 # or a network retry after a successful charge double-bills the customer.
 if attempt > 0 and cached_idempotency_key:
     key = cached_idempotency_key
 ```
-Nothing in `attempt`, `cached_idempotency_key`, or the branch shape explains *why* — the comment carries the constraint the names can't.
+
+Nothing in `attempt`, `cached_idempotency_key`, or the branch shape explains _why_ — the comment carries the constraint the names can't.
 
 **Public API doc (exempt from the 3-line cap)**
+
 ```ts
 /**
  * Splits a monetary amount into equal integer shares without losing cents
@@ -80,6 +85,7 @@ export function splitEvenly(totalCents: number, parts: number): number[] { ... }
 ```
 
 **Non-obvious gotcha (rung 3, private code, still commented)**
+
 ```go
 // macOS coalesces SIGCHLD signals sent in quick succession, so a single
 // handler invocation can represent multiple exited children.

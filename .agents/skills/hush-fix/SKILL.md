@@ -28,7 +28,7 @@ given.
   rustdoc, godoc, XML doc comments, ...) so the LSP surfaces it on hover.
 - **Type-duplicating doc** → drop the redundant type tag, keep behavior,
   constraints, and the example — the type checker already owns the type.
-- **Undocumented gotcha** → add the shortest comment that carries the *why*,
+- **Undocumented gotcha** → add the shortest comment that carries the _why_,
   ~3 lines, broken at clause boundaries. Covers rejected alternatives too —
   say what was tried and why it doesn't work, not just what does.
 - **Oversized comment** → tighten to ~3 lines unless a clause-boundary break
