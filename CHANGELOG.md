@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 2.3.0
+
+### Minor Changes
+
+- [#17](https://github.com/ro80t/anonymous-ip/pull/17) [`7692147`](https://github.com/ro80t/anonymous-ip/commit/76921475f86e53c546a592d5e70ddc4f7c862a07) Thanks [@ro80t](https://github.com/ro80t)! - Add `anonymousIp` Hono middleware (`anonymous-ip/hono`) that runs `checkAnonymity` for the request's client IP and exposes the result via `c.get("anonymity")`.
+
 ## 2.2.0
 
 ### Minor Changes
