@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 2.4.0
+
+### Minor Changes
+
+- [#21](https://github.com/ro80t/anonymous-ip/pull/21) [`dcedeb5`](https://github.com/ro80t/anonymous-ip/commit/dcedeb58cc3e7961001950cc815a727603106ca9) Thanks [@ro80t](https://github.com/ro80t)! - Add ASN 396319 (Oxylabs proxy network) to `PROXY_ASN_PROVIDERS`. Verified against RIPEstat and ipinfo.io whois data before inclusion.
+
 ## 2.3.0
 
 ### Minor Changes
