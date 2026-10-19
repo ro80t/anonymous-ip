@@ -1,4 +1,5 @@
 import type { Context, MiddlewareHandler } from "hono";
+import { forwardedIp } from "./forwarded-ip";
 import { checkAnonymity, type AnonymityCheckResult } from "./index";
 
 export type AnonymousIpVariables = {
@@ -19,11 +20,7 @@ export interface AnonymousIpOptions {
 }
 
 function defaultGetIp(c: Context): string | null {
-  const forwardedFor = c.req.header("x-forwarded-for");
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0]?.trim() ?? null;
-  }
-  return c.req.header("x-real-ip") ?? null;
+  return forwardedIp((name) => c.req.header(name));
 }
 
 /**
