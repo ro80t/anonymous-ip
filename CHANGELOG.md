@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 2.5.0
+
+### Minor Changes
+
+- [#25](https://github.com/ro80t/anonymous-ip/pull/25) [`5731ec0`](https://github.com/ro80t/anonymous-ip/commit/5731ec00c032246db7df57cd53a65b5d474d2f57) Thanks [@ro80t](https://github.com/ro80t)! - Add framework integrations alongside the existing Hono middleware: `anonymous-ip/express`, `anonymous-ip/fastify`, `anonymous-ip/nuxt`, `anonymous-ip/sveltekit`, `anonymous-ip/astro`, `anonymous-ip/elysia`, and `anonymous-ip/tanstack-start` (each exports `anonymousIp`), plus `getAnonymity` from `anonymous-ip/next`. Each runs `checkAnonymity` for the request's client IP and exposes the result in the framework's idiomatic place.
+
 ## 2.4.0
 
 ### Minor Changes
