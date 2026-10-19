@@ -108,6 +108,23 @@ By default, the client IP is read from the first `X-Forwarded-For` entry, fallin
 app.use(anonymousIp({ getIp: (c) => c.req.header("cf-connecting-ip") }));
 ```
 
+### Other frameworks
+
+Besides Hono, each integration runs `checkAnonymity` for the request's client IP (same `X-Forwarded-For` / `X-Real-IP` default and `getIp` override as above, with the same spoofing caveat) and exposes the result where that framework expects it. `anonymity` is `null` when no IP is found.
+
+| Import                        | Usage                                                           | Result                         |
+| ----------------------------- | --------------------------------------------------------------- | ------------------------------ |
+| `anonymous-ip/express`        | `app.use(anonymousIp())`                                        | `res.locals.anonymity`         |
+| `anonymous-ip/fastify`        | `app.addHook("onRequest", anonymousIp())`                       | `request.anonymity`            |
+| `anonymous-ip/nuxt`           | `export default anonymousIp()` in `server/middleware/`          | `event.context.anonymity`      |
+| `anonymous-ip/sveltekit`      | `export const handle = anonymousIp()` in `hooks.server.ts`      | `event.locals.anonymity`       |
+| `anonymous-ip/astro`          | `export const onRequest = anonymousIp()` in `src/middleware.ts` | `Astro.locals.anonymity`       |
+| `anonymous-ip/elysia`         | `new Elysia().use(anonymousIp())`                               | `anonymity` in handler context |
+| `anonymous-ip/tanstack-start` | `requestMiddleware: [anonymousIp()]`                            | `context.anonymity`            |
+| `anonymous-ip/next`           | `await getAnonymity(request)` in route handlers                 | return value                   |
+
+For SvelteKit and Astro, declare `anonymity` on `App.Locals` (the `AnonymousIpLocals` type is exported). GeoLite2 needs the filesystem, so on Next.js use `getAnonymity` from the Node.js runtime, not Edge.
+
 ### Shutting down
 
 The GeoLite2 databases are downloaded in the background on first use and kept up to date automatically. In short-lived processes (CLIs, tests, serverless functions), close the readers explicitly once you're done.

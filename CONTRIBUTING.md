@@ -14,6 +14,7 @@ bun install
 - `src/tor.ts` — Tor exit node detection, backed by the official Tor Project bulk exit list (`isTorExitNode`, `getTorExitNodes`, `clearTorExitNodeCache`)
 - `src/index.ts` — public entry point, combines the above into `checkAnonymity`
 - `src/hono.ts` — `anonymousIp` Hono middleware, published as the `anonymous-ip/hono` subpath
+- `src/{next,nuxt,sveltekit,astro,express,fastify,elysia,tanstack-start}.ts` — the same idea for other frameworks, each published as its own subpath (shared IP header logic lives in `src/forwarded-ip.ts`; tests in `src/frameworks.test.ts`)
 
 ## Scripts
 
