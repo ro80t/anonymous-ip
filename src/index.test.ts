@@ -54,6 +54,18 @@ describe("checkAnonymity", () => {
     }
   });
 
+  it("recognizes a Proton VPN exit without flagging other Bahnhof customers", async () => {
+    lookupIp.mockResolvedValue(geo(8473));
+    isTorExitNode.mockResolvedValue(false);
+
+    const exit = await checkAnonymity("185.159.156.99");
+    const neighbor = await checkAnonymity("185.159.155.255");
+
+    expect(exit).toMatchObject({ isVpn: true, isProxy: false, isTor: false });
+    expect(exit.vpnProvider).toMatch(/proton/i);
+    expect(neighbor).toMatchObject({ isVpn: false, vpnProvider: null });
+  });
+
   it("flags a Tor exit node independently of the ASN checks", async () => {
     lookupIp.mockResolvedValue(geo(15169));
     isTorExitNode.mockResolvedValue(true);
