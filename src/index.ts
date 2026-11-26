@@ -1,5 +1,6 @@
 import { lookupIp, type IpGeoInfo } from "./geo";
 import { getVpnProvider } from "./vpn-asns";
+import { getVpnExitProvider } from "./vpn-exits";
 import { getProxyProvider } from "./proxy-asns";
 import { isTorExitNode } from "./tor";
 
@@ -33,8 +34,7 @@ function toProxySignal(proxyProvider: string | null): ProxySignal {
 
 /**
  * Looks up an IP's ASN/country/city and checks it against known
- * anonymization signals: the VPN ASN list, the proxy ASN list, and the
- * Tor exit node list.
+ * VPN ASNs and exits, proxy ASNs, and Tor exit nodes.
  */
 export async function checkAnonymity(ip: string): Promise<AnonymityCheckResult> {
   const [geo, isTor] = await Promise.all([lookupIp(ip), isTorExitNode(ip)]);
@@ -44,7 +44,7 @@ export async function checkAnonymity(ip: string): Promise<AnonymityCheckResult> 
     ip,
     isTor,
     geo,
-    ...toVpnSignal(getVpnProvider(asn)),
+    ...toVpnSignal(getVpnExitProvider(ip, asn) ?? getVpnProvider(asn)),
     ...toProxySignal(getProxyProvider(asn)),
   };
 }
