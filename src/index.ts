@@ -22,6 +22,17 @@ export type AnonymityCheckResult = {
 } & VpnSignal &
   ProxySignal;
 
+function getVpnProviderName(ip: string, asn: number | null): string | null {
+  const vpnProvider = getVpnProvider(asn);
+
+  if (vpnProvider)
+    return vpnProvider;
+
+  const vpnExitProvider = getVpnExitProvider(ip, asn);
+
+  return vpnExitProvider;
+}
+
 function toVpnSignal(vpnProvider: string | null): VpnSignal {
   return vpnProvider != null ? { isVpn: true, vpnProvider } : { isVpn: false, vpnProvider: null };
 }
@@ -44,7 +55,7 @@ export async function checkAnonymity(ip: string): Promise<AnonymityCheckResult> 
     ip,
     isTor,
     geo,
-    ...toVpnSignal(getVpnExitProvider(ip, asn) ?? getVpnProvider(asn)),
+    ...toVpnSignal(getVpnProviderName(ip, asn)),
     ...toProxySignal(getProxyProvider(asn)),
   };
 }
