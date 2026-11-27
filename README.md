@@ -1,6 +1,6 @@
 # anonymous-ip
 
-Looks up the ASN, country, and city for an IP address and checks it against known anonymization signals — a curated VPN ASN list, a curated proxy ASN list, and the official Tor exit node list — to detect anonymized connections. Uses [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) via [`geolite2-redist`](https://github.com/GitSquared/node-geolite2-redist), so no MaxMind license key is required.
+Looks up the ASN, country, and city for an IP address and checks for known VPN ASNs and exits, proxy ASNs, and Tor exit nodes. Uses [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) via [`geolite2-redist`](https://github.com/GitSquared/node-geolite2-redist), so no MaxMind license key is required.
 
 ## Install
 
@@ -42,7 +42,7 @@ if (result.isVpn) {
 }
 ```
 
-`checkAnonymity` combines every anonymization signal this package knows about (VPN ASNs, proxy ASNs, and Tor exit nodes today) into one result, so adding new signals later won't require an API rename. A small number of ASNs are known to serve both VPN and proxy traffic and can set both `isVpn` and `isProxy`.
+`checkAnonymity` also checks known VPN exit addresses and ranges on shared networks. These entries match only when the address and its origin ASN both match. A small number of ASNs are known to serve both VPN and proxy traffic and can set both `isVpn` and `isProxy`.
 
 `AnonymityCheckResult` ties each flag to its provider field at the type level: `vpnProvider` is `string` when `isVpn` is `true` and `null` when it's `false` (and likewise for `isProxy`/`proxyProvider`), so TypeScript narrows the provider field for you once you've checked the flag — no manual null check needed.
 
@@ -140,7 +140,7 @@ await closeGeoReaders();
 | Function                                                              | Description                                                                                                                   |
 | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `lookupIp(ip: string): Promise<IpGeoInfo>`                            | Looks up ASN, country, and city for an IP address. Throws if the IP string is invalid.                                        |
-| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`           | Runs `lookupIp` and checks the result against every known anonymization signal (VPN ASN list, proxy ASN list, Tor exit list). |
+| `checkAnonymity(ip: string): Promise<AnonymityCheckResult>`           | Runs `lookupIp` and checks each IP and its ASN against known VPN exits, consumer VPN ASNs, proxy ASNs, and the Tor exit list. |
 | `isVpnAsn(asn: number \| null \| undefined): boolean`                 | Returns true if the ASN belongs to a known VPN provider.                                                                      |
 | `getVpnProvider(asn: number \| null \| undefined): string \| null`    | Returns the known VPN provider name for an ASN, or `null`.                                                                    |
 | `isProxyAsn(asn: number \| null \| undefined): boolean`               | Returns true if the ASN belongs to a known proxy provider.                                                                    |

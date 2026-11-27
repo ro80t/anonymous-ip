@@ -56,6 +56,14 @@ export const VPN_ASN_PROVIDERS: ReadonlyMap<number, string> = new Map([
   [47099, "WiTopia"],
   [47100, "WiTopia"],
   [203619, "IVPN"],
+  // VirtualShield's published exit example is 104.234.182.71 (AS62579).
+  [62579, "VirtualShield"],
+  // Exit observations: https://ipapi.is/vpn-exit-nodes.html (2026-11-26).
+  [62651, "Strong Technology (IPVanish / Bitdefender VPN)"],
+  [206092, "F.N.S. Holdings (ExpressVPN / Private Internet Access)"],
+  [147049, "PacketHub (NordVPN)"],
+  [141039, "PacketHub (NordVPN)"],
+  [40861, "Paradise Networks (VyprVPN)"],
 ]);
 
 /** Returns true if the given ASN belongs to a known VPN/proxy provider. */
