@@ -25,8 +25,7 @@ export type AnonymityCheckResult = {
 function getVpnProviderName(ip: string, asn: number | null): string | null {
   const vpnProvider = getVpnProvider(asn);
 
-  if (vpnProvider)
-    return vpnProvider;
+  if (vpnProvider) return vpnProvider;
 
   const vpnExitProvider = getVpnExitProvider(ip, asn);
 
