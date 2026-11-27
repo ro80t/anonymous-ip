@@ -1,5 +1,11 @@
 # anonymous-ip
 
+## 2.6.0
+
+### Minor Changes
+
+- [#32](https://github.com/ro80t/anonymous-ip/pull/32) [`92eac95`](https://github.com/ro80t/anonymous-ip/commit/92eac95dd6cad97e18139f9784a746edd8cc3a18) Thanks [@aki0804](https://github.com/aki0804)! - Detect six additional VPN ASNs and recognize specific VPN exits on shared networks by IP address and origin ASN.
+
 ## 2.5.0
 
 ### Minor Changes
